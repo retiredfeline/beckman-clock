@@ -47,7 +47,7 @@ I hereby place this code in the public domain.
 ## Acknowledgments
 
 * Steven Bjork (8048 code for clock)
-* Allan Baldwin (asxxxx cross assemblers)
+* Alan Baldwin (asxxxx cross assemblers)
 * Dave Ho (asm48 cross assembler)
 * William Luitje (S48 8048 simulator)
 * Arnim Läuger (MCS-48 datasheets) https://devsaurus.github.io/mcs-48/mcs-48.pdf
