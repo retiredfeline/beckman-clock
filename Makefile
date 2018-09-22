@@ -26,4 +26,4 @@ clock.ibn:	clock.ihx
 		hex2bin -e ibn clock.ihx
 
 clean:
-		rm -f clock.sym clock.lst clock.rel clock.hlr clock.bin clock.ihx clock.ibn clock.fbn
+		rm -f clock.sym clock.lst clock.rel clock.hlr clock.bin clock.ihx clock.ibn clock.zbn
