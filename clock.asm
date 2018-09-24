@@ -127,6 +127,9 @@
 .equ	counttick,	6
 .endif
 
+; location doubles as powerfail indicator
+.equ	powerfail,	14+clockoff
+
 .equ	hzcounter,	15+clockoff
 
 .if	debug == 1
@@ -170,7 +173,14 @@
 	mov	r0, #hzcounter
 	mov	a, @r0
 	add	a, #256-(counthz/2)
-; C means in first half of second
+.if	freerun == 1
+.else
+	jc	firsthalf	; in first half of second
+	mov	r0, #powerfail	; make colon 3/4 second on before buttons used
+	add	a, @r0
+firsthalf:
+.endif
+; C means in first half of second or first 3/4 if buttons not used yet
 	mov	r0, #scand
 	mov	a, @r0
 	dec	a
@@ -246,6 +256,11 @@ swnochange:
 swaction:
 	call	incmin
 	call	inchour
+.if	freerun == 1
+.else
+	mov	r0, #powerfail	; button was clicked
+	mov	@r0, #0
+.endif
 	mov	r0, #swtent
 	mov	a, @r0
 	mov	r0, #swstate
@@ -355,6 +370,8 @@ ticktock:
 	mov	r0, #tickcounter
 	mov	@r0, #counttick
 .else
+	mov	r0, #powerfail
+	mov	@r0, #counthz/4	; so colon blink is asymmetric on power up
 	mov	a, psw		; initialise saved psw
 	mov	r0, #savepsw
 	mov	@r0, a
