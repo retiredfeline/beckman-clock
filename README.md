@@ -36,6 +36,8 @@ Burn the firmware to an (E)EPROM and insert in system. Actually, unless you have
 
 First release October 2018
 
+Updated version October 2025 using universal 8042/8048 clock code from https://github.com/retiredfeline/8042-clock
+
 ## Authors
 
 * **Ken Yap** - heavily modified code from https://www.wraith.sf.ca.us/8048/

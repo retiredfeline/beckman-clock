@@ -1,15 +1,22 @@
 #
-# The primary target will use both assemblers and compare the results
-# but if you just use one assembler change the target to
-# either clock.bin or clock.hex
+# Uses GNU make for pattern substitution
 #
+FIRMWARE_END=0x3FF
 
-clock.hex:	clock.asm
-		as8048 -l -o clock.asm
-		aslink -i -o clock.rel
+default:	clock.rom
 
-clock.bin:	clock.hex
-		hex2bin -e bin clock.hex
+# assemble with as8048
+%.hex:		%.asm
+		as8048 -l -o $<
+		aslink -i -o $(<:.asm=.rel)
+
+# convert to bin
+%.bin:		%.hex
+		hex2bin -e bin $<
+
+# generate rom from bin by adding checksum at end
+%.rom:		%.bin
+		srec_cat $< -binary -crop 0 $(FIRMWARE_END) -fill 0xFF 0 $(FIRMWARE_END) -checksum-neg-b-e $(FIRMWARE_END) 1 1 -o $(<:.bin=.rom) -binary
 
 clean:
-		rm -f clock.sym clock.lst clock.rel clock.hlr clock.hex clock.bin
+		rm -f *.sym *.lst *.rel *.hlr *.hex
