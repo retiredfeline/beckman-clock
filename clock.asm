@@ -1786,10 +1786,10 @@ digit2mask:
 	.db	0x00
 .else
 .ifdef	beckman
-	.db	~0x80		; p2.7 is 10 hour
-	.db	~0x40		; p2.6 is hour
-	.db	~0x20		; p2.5 is 10 min
-	.db	~0x10		; p2.4 is min
+	.db	~0x80		; p2.7 is min
+	.db	~0x40		; p2.6 is 10 min
+	.db	~0x20		; p2.5 is hour
+	.db	~0x10		; p2.4 is 10 hour
 .else
 	.db	~0x10		; p2.4 is min
 	.db	~0x20		; p2.5 is 10 min
