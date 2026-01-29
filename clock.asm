@@ -49,6 +49,7 @@
 
 ; 0 = 7 segment, 1 = 6 segment
 .equ	sixseg,		0
+.equ	raisedzero,	1
 
 ; 0 = 0 bit turns on, 1 = 1 bit turns on segment
 .equ	highison,	1
@@ -1629,7 +1630,11 @@ tcdtab:
 dfont:
 .if	sixseg == 1
 .if	highison == 1
-	.db	0x1c	; 0
+.if	raisedzero == 1
+	.db	0x23	; top 0
+.else
+	.db	0x1c	; bottom 0
+.endif	; raisedzero
 	.db	0x12	; 1
 	.db	0x1b
 	.db	0x0f
@@ -1646,7 +1651,11 @@ dfont:
 	.db	0x00
 	.db	0x00
 .else
-	.db	~0x1c	; 0
+.if	raisedzero == 1
+	.db	~0x23	; top 0
+.else
+	.db	~0x1c	; bottom 0
+.endif	; raisedzero
 	.db	~0x12	; 1
 	.db	~0x1b
 	.db	~0x0f
